@@ -1,7 +1,6 @@
 (function() {
-    // Function to fetch adverts data from the internal API
     function fetchAdverts(uniqueId, currentUrl) {
-        const apiEndpoint = 'https://reallygreatads.test/api/placement'; // Update with your API endpoint
+        const apiEndpoint = 'https://api.reallygreatads.com/v1/placement';
         const payload = {
             uniqueId: uniqueId,
             url: currentUrl
