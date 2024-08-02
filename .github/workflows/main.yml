@@ -15,6 +15,8 @@ jobs:
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install uglify-js -g
@@ -47,8 +49,16 @@ jobs:
           curl -sL https://github.com/digitalocean/doctl/releases/download/v1.91.0/doctl-1.91.0-linux-amd64.tar.gz | tar -xzv
           sudo mv doctl /usr/local/bin
 
+      - name: List CDN Endpoints
+        env:
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DO_ACCESS_TOKEN }}
+        id: list-cdn
+        run: |
+          doctl compute cdn list
+
       - name: Purge Cache
         env:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DO_ACCESS_TOKEN }}
         run: |
-          doctl compute cdn flush --url https://${SPACE_NAME}.${SPACE_REGION}.digitaloceanspaces.com/script.min.js
+          CDN_ID=$(doctl compute cdn list --no-header --format ID)
+          doctl compute cdn flush $CDN_ID --files /script.min.js
