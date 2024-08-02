@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node
+        uses: actions/setup-node@v4
 
       - name: Install dependencies
         run: npm install uglify-js -g
