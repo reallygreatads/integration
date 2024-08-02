@@ -15,27 +15,21 @@ jobs:
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
-        with:
-          node-version: '20'
 
       - name: Install dependencies
-        run: |
-          npm install uglify-js -g
-        continue-on-error: true
+        run: npm install uglify-js -g
 
-      - name: Check Node.js and npm version
-        run: |
-          node -v
-          npm -v
+      - name: Verify script.js exists
+        run: ls -la script.js
 
       - name: Minimize JavaScript
-        run: |
-          uglifyjs script.js -o script.min.js
-        continue-on-error: true
+        run: uglifyjs script.js -o script.min.js
+
+      - name: Verify script.min.js created
+        run: ls -la script.min.js
 
       - name: Install AWS CLI
         run: sudo apt-get install awscli -y
-        continue-on-error: true
 
       - name: Upload to DigitalOcean Spaces
         env:
@@ -46,5 +40,15 @@ jobs:
         run: |
           aws configure set aws_access_key_id $DO_SPACES_KEY
           aws configure set aws_secret_access_key $DO_SPACES_SECRET
-          aws s3 cp script.min.js s3://${SPACE_NAME}/ --region ${SPACE_REGION} --endpoint https://${SPACE_REGION}.digitaloceanspaces.com
-        continue-on-error: true
+          aws s3 cp script.min.js s3://${SPACE_NAME}/ --region ${SPACE_REGION} --endpoint https://${SPACE_REGION}.digitaloceanspaces.com --acl public-read
+
+      - name: Install DigitalOcean CLI
+        run: |
+          curl -sL https://github.com/digitalocean/doctl/releases/download/v1.91.0/doctl-1.91.0-linux-amd64.tar.gz | tar -xzv
+          sudo mv doctl /usr/local/bin
+
+      - name: Purge Cache
+        env:
+          DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DO_ACCESS_TOKEN }}
+        run: |
+          doctl compute cdn flush --url https://${SPACE_NAME}.${SPACE_REGION}.digitaloceanspaces.com/script.min.js
