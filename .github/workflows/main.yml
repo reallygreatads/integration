@@ -11,14 +11,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Assuming there's an upcoming version that supports Node.js 20
-        with:
-          node-version: '20'
+        uses: actions/checkout
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+        uses: actions/setup-node
 
       - name: Install dependencies
         run: npm install uglify-js -g
