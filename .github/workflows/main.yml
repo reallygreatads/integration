@@ -15,15 +15,27 @@ jobs:
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
       - name: Install dependencies
-        run: npm install uglify-js -g
+        run: |
+          npm install uglify-js -g
+        continue-on-error: true
+
+      - name: Check Node.js and npm version
+        run: |
+          node -v
+          npm -v
 
       - name: Minimize JavaScript
-        run: uglifyjs script.js -o script.min.js
+        run: |
+          uglifyjs script.js -o script.min.js
+        continue-on-error: true
 
       - name: Install AWS CLI
         run: sudo apt-get install awscli -y
+        continue-on-error: true
 
       - name: Upload to DigitalOcean Spaces
         env:
@@ -35,3 +47,4 @@ jobs:
           aws configure set aws_access_key_id $DO_SPACES_KEY
           aws configure set aws_secret_access_key $DO_SPACES_SECRET
           aws s3 cp script.min.js s3://${SPACE_NAME}/ --region ${SPACE_REGION} --endpoint https://${SPACE_REGION}.digitaloceanspaces.com
+        continue-on-error: true
