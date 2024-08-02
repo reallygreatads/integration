@@ -10,30 +10,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: Install Node.js and UglifyJS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nodejs npm
+          npm install uglify-js -g
 
-    - name: Install dependencies
-      run: npm install uglify-js -g
+      - name: Minimize JavaScript
+        run: uglifyjs script.js -o script.min.js
 
-    - name: Minimize JavaScript
-      run: uglifyjs script.js -o script.min.js
+      - name: Install AWS CLI
+        run: sudo apt-get install awscli -y
 
-    - name: Install AWS CLI
-      run: sudo apt-get install awscli -y
-
-    - name: Upload to DigitalOcean Spaces
-      env:
-        DO_SPACES_KEY: ${{ secrets.DO_SPACES_KEY }}
-        DO_SPACES_SECRET: ${{ secrets.DO_SPACES_SECRET }}
-        SPACE_NAME: cdn.reallygreatads.com
-        SPACE_REGION: sfo3
-      run: |
-        aws configure set aws_access_key_id $DO_SPACES_KEY
-        aws configure set aws_secret_access_key $DO_SPACES_SECRET
-        aws s3 cp script.min.js s3://${SPACE_NAME}/ --region ${SPACE_REGION} --endpoint https://${SPACE_REGION}.digitaloceanspaces.com
+      - name: Upload to DigitalOcean Spaces
+        env:
+          DO_SPACES_KEY: ${{ secrets.DO_SPACES_KEY }}
+          DO_SPACES_SECRET: ${{ secrets.DO_SPACES_SECRET }}
+          SPACE_NAME: cdn.reallygreatads.com
+          SPACE_REGION: sfo3
+        run: |
+          aws configure set aws_access_key_id $DO_SPACES_KEY
+          aws configure set aws_secret_access_key $DO_SPACES_SECRET
+          aws s3 cp script.min.js s3://${SPACE_NAME}/ --region ${SPACE_REGION} --endpoint https://${SPACE_REGION}.digitaloceanspaces.com
