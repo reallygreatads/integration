@@ -11,18 +11,21 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '14'
+        node-version: '20'
 
     - name: Install dependencies
       run: npm install uglify-js -g
 
     - name: Minimize JavaScript
       run: uglifyjs script.js -o script.min.js
+
+    - name: Install AWS CLI
+      run: sudo apt-get install awscli -y
 
     - name: Upload to DigitalOcean Spaces
       env:
@@ -31,6 +34,6 @@ jobs:
         SPACE_NAME: your-space-name
         SPACE_REGION: your-space-region
       run: |
-        curl -X PUT -T script.min.js \
-        -H "Authorization: Bearer $DO_SPACES_KEY:$DO_SPACES_SECRET" \
-        https://${SPACE_NAME}.${SPACE_REGION}.digitaloceanspaces.com/script.min.js
+        aws configure set aws_access_key_id $DO_SPACES_KEY
+        aws configure set aws_secret_access_key $DO_SPACES_SECRET
+        aws s3 cp script.min.js s3://${SPACE_NAME}/ --region ${SPACE_REGION} --endpoint https://${SPACE_REGION}.digitaloceanspaces.com
