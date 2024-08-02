@@ -31,8 +31,8 @@ jobs:
       env:
         DO_SPACES_KEY: ${{ secrets.DO_SPACES_KEY }}
         DO_SPACES_SECRET: ${{ secrets.DO_SPACES_SECRET }}
-        SPACE_NAME: your-space-name
-        SPACE_REGION: your-space-region
+        SPACE_NAME: cdn.reallygreatads.com
+        SPACE_REGION: sfo3
       run: |
         aws configure set aws_access_key_id $DO_SPACES_KEY
         aws configure set aws_secret_access_key $DO_SPACES_SECRET
