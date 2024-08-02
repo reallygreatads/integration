@@ -1,0 +1,36 @@
+name: Minimize and Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install uglify-js -g
+
+    - name: Minimize JavaScript
+      run: uglifyjs script.js -o script.min.js
+
+    - name: Upload to DigitalOcean Spaces
+      env:
+        DO_SPACES_KEY: ${{ secrets.DO_SPACES_KEY }}
+        DO_SPACES_SECRET: ${{ secrets.DO_SPACES_SECRET }}
+        SPACE_NAME: your-space-name
+        SPACE_REGION: your-space-region
+      run: |
+        curl -X PUT -T script.min.js \
+        -H "Authorization: Bearer $DO_SPACES_KEY:$DO_SPACES_SECRET" \
+        https://${SPACE_NAME}.${SPACE_REGION}.digitaloceanspaces.com/script.min.js
