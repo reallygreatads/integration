@@ -1,0 +1,21 @@
+{
+  "_template": "template-simple",
+  "template": "template-card",
+  "adverts": [
+    {
+      "title": "Advert 1",
+      "description": "This is the description for Advert 1.",
+      "url": "https://example.com/advert-1"
+    },
+    {
+      "title": "Advert Title",
+      "description": "This is the description for Advert 2.",
+      "url": "https://example.com/advert-2"
+    },
+    {
+      "title": "Advert 3",
+      "description": "This is the description for Advert 3.",
+      "url": "https://example.com/advert-3"
+    }
+  ]
+}

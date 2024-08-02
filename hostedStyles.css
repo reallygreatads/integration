@@ -1,0 +1,59 @@
+/* styles.css */
+.advert {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Template 1: Simple Layout */
+.template-simple {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.template-simple .advert {
+    background-color: #f9f9f9;
+    width: 100%; /* Ensures the advert takes full width */
+    box-sizing: border-box;
+}
+
+.template-simple .advert h3 {
+    color: #333;
+}
+
+.template-simple .advert-button {
+    color: white;
+    background-color: blue;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 3px;
+}
+
+/* Template 2: Card Layout */
+.template-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.template-card .advert {
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 20px); /* Adjust for three-column layout with gap */
+    box-sizing: border-box;
+}
+
+.template-card .advert h3 {
+    color: #007bff;
+}
+
+.template-card .advert-button {
+    color: #007bff;
+    background-color: white;
+    border: 1px solid #007bff;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 3px;
+}
