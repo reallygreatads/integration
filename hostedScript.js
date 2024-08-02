@@ -1,4 +1,3 @@
-// hostedScript.js
 (function() {
     // Function to fetch adverts data from the internal API
     function fetchAdverts(uniqueId, currentUrl) {
@@ -50,9 +49,51 @@
         });
     }
 
+    // Function to insert styles into the document head
+    function insertStyles(containerId) {
+        const style = document.createElement('style');
+        style.type = 'text/css';
+        style.innerHTML = `
+            #${containerId} .advert {
+                border: 1px solid #ccc;
+                padding: 16px;
+                margin: 16px 0;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                background-color: #fff;
+            }
+            #${containerId} .advert h3 {
+                margin: 0 0 8px;
+                font-size: 1.25em;
+                color: #333;
+            }
+            #${containerId} .advert p {
+                margin: 0 0 16px;
+                font-size: 1em;
+                color: #666;
+            }
+            #${containerId} .advert-button {
+                display: inline-block;
+                padding: 8px 16px;
+                font-size: 1em;
+                color: #fff;
+                background-color: #007bff;
+                text-decoration: none;
+                border-radius: 4px;
+            }
+            #${containerId} .advert-button:hover {
+                background-color: #0056b3;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
     // Main function to initialize the adverts fetching and displaying
     window.initAdverts = function(uniqueId, containerId) {
         const currentUrl = window.location.href;
+
+        // Insert styles
+        insertStyles(containerId);
 
         fetchAdverts(uniqueId, currentUrl)
             .then(data => {
