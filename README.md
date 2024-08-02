@@ -16,7 +16,7 @@
         const containerId = 'adverts-container';
 
         const script = document.createElement('script');
-        script.src = 'https://cdn.reallygreatads.com/hostedScript.js';
+        script.src = 'https://cdn.reallygreatads.com/script.min.js';
         script.type = 'text/javascript';
         script.onload = function() {
             window.initAdverts(uniqueId, containerId);
