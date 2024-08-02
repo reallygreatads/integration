@@ -13,11 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Node.js and UglifyJS
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y nodejs npm
-          npm install uglify-js -g
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install uglify-js -g
 
       - name: Minimize JavaScript
         run: uglifyjs script.js -o script.min.js
