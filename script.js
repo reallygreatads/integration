@@ -39,8 +39,8 @@
             advertElement.appendChild(description);
 
             const button = document.createElement('a');
-            button.href = advert.clickUrl;
-            button.innerText = 'Learn More';
+            button.href = advert.click_url;
+            button.innerText = advert.cta_text;
             button.className = 'advert-button';
             advertElement.appendChild(button);
 
