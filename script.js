@@ -15,6 +15,32 @@
         }).then(response => response.json());
     }
 
+    // Function to show loading spinner
+    function showLoadingSpinner(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        container.innerHTML = ''; // Clear any existing content
+        const spinner = document.createElement('div');
+        spinner.className = 'loading-spinner';
+        spinner.innerHTML = `
+            <div class="spinner"></div>
+            <p>Loading adverts...</p>
+        `;
+        container.appendChild(spinner);
+    }
+
+    // Function to remove loading spinner
+    function removeLoadingSpinner(containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const spinner = container.querySelector('.loading-spinner');
+        if (spinner) {
+            container.removeChild(spinner);
+        }
+    }
+
     // Function to display adverts on the page
     function displayAdverts(adverts, template, containerId) {
         const container = document.getElementById(containerId);
@@ -22,7 +48,6 @@
             console.error('Adverts container not found');
             return;
         }
-        container.innerHTML = ''; // Clear any existing content
         container.className = ''; // Reset any previous template class
         container.classList.add(template); // Apply the new template class
 
@@ -105,6 +130,31 @@
             #${containerId}.template-card .advert {
                 margin: 0;
             }
+
+            /* Loading spinner styles */
+            #${containerId} .loading-spinner {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 32px;
+            }
+            #${containerId} .loading-spinner .spinner {
+                width: 40px;
+                height: 40px;
+                border: 4px solid rgba(0, 123, 255, 0.3);
+                border-top-color: #007bff;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+            #${containerId} .loading-spinner p {
+                margin-top: 16px;
+                font-size: 1em;
+                color: #333;
+            }
+            @keyframes spin {
+                to { transform: rotate(360deg); }
+            }
         `;
         document.head.appendChild(style);
     }
@@ -116,11 +166,20 @@
         // Insert styles
         insertStyles(containerId);
 
+        // Show loading spinner
+        showLoadingSpinner(containerId);
+
         fetchAdverts(uniqueId, currentUrl)
             .then(data => {
+                // Remove loading spinner
+                removeLoadingSpinner(containerId);
+
+                // Display adverts
                 displayAdverts(data.adverts, data.template, containerId);
             })
             .catch(error => {
+                // Remove loading spinner and handle error
+                removeLoadingSpinner(containerId);
                 console.error('Error fetching adverts:', error);
             });
     };
