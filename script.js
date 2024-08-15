@@ -35,7 +35,12 @@
             advertElement.appendChild(title);
 
             const description = document.createElement('p');
-            description.innerText = advert.description;
+            // Check if the description is an array and join with new lines if it is
+            if (Array.isArray(advert.description)) {
+                description.innerText = advert.description.join('\n');
+            } else {
+                description.innerText = advert.description;
+            }
             advertElement.appendChild(description);
 
             const button = document.createElement('a');
@@ -53,6 +58,7 @@
         const style = document.createElement('style');
         style.type = 'text/css';
         style.innerHTML = `
+            /* Common styles for all templates */
             #${containerId} .advert {
                 border: 1px solid #ccc;
                 padding: 16px;
@@ -82,6 +88,22 @@
             }
             #${containerId} .advert-button:hover {
                 background-color: #0056b3;
+            }
+
+            /* Styles for template-simple */
+            #${containerId}.template-simple .advert {
+                margin-bottom: 16px;
+                display: block;
+            }
+
+            /* Styles for template-card */
+            #${containerId}.template-card {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 16px;
+            }
+            #${containerId}.template-card .advert {
+                margin: 0;
             }
         `;
         document.head.appendChild(style);
