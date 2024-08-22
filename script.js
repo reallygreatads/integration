@@ -55,6 +55,21 @@
             const advertElement = document.createElement('div');
             advertElement.className = 'advert';
 
+            // Add brand name at the top
+            const brandName = document.createElement('p');
+            brandName.className = 'advert-brand-name';
+            brandName.innerText = advert.brand_name;
+            advertElement.appendChild(brandName);
+
+            // Add image below brand name
+            if (advert.image_url) {
+                const image = document.createElement('img');
+                image.className = 'advert-image';
+                image.src = advert.image_url;
+                image.alt = advert.title;
+                advertElement.appendChild(image);
+            }
+
             const title = document.createElement('h3');
             title.innerText = advert.title;
             advertElement.appendChild(title);
@@ -67,6 +82,14 @@
                 description.innerText = advert.description;
             }
             advertElement.appendChild(description);
+
+            // Add display URL below description as plain text
+            if (advert.display_url) {
+                const displayUrl = document.createElement('p');
+                displayUrl.className = 'advert-display-url';
+                displayUrl.innerText = advert.display_url;
+                advertElement.appendChild(displayUrl);
+            }
 
             const button = document.createElement('a');
             button.href = advert.click_url;
@@ -92,6 +115,17 @@
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
                 background-color: #fff;
             }
+            #${containerId} .advert .advert-brand-name {
+                font-size: 0.85em;
+                color: #777;
+                margin-bottom: 8px;
+            }
+            #${containerId} .advert .advert-image {
+                width: 100%;
+                max-width: 300px;
+                margin-bottom: 16px;
+                border-radius: 4px;
+            }
             #${containerId} .advert h3 {
                 margin: 0 0 8px;
                 font-size: 1.25em;
@@ -101,6 +135,11 @@
                 margin: 0 0 16px;
                 font-size: 1em;
                 color: #666;
+            }
+            #${containerId} .advert-display-url {
+                margin: 8px 0;
+                font-size: 0.9em;
+                color: #007bff;
             }
             #${containerId} .advert-button {
                 display: inline-block;
