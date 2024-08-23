@@ -55,13 +55,11 @@
             const advertElement = document.createElement('div');
             advertElement.className = 'advert';
 
-            // Add brand name at the top
-            const brandName = document.createElement('p');
-            brandName.className = 'advert-brand-name';
-            brandName.innerText = advert.brand_name;
-            advertElement.appendChild(brandName);
+            const title = document.createElement('h3');
+            title.innerText = advert.title;
+            advertElement.appendChild(title);
 
-            // Add image below brand name
+            // Add image
             if (advert.image_url) {
                 const image = document.createElement('img');
                 image.className = 'advert-image';
@@ -69,10 +67,6 @@
                 image.alt = advert.title;
                 advertElement.appendChild(image);
             }
-
-            const title = document.createElement('h3');
-            title.innerText = advert.title;
-            advertElement.appendChild(title);
 
             const description = document.createElement('p');
             // Check if the description is an array and join with new lines if it is
@@ -82,14 +76,6 @@
                 description.innerText = advert.description;
             }
             advertElement.appendChild(description);
-
-            // Add display URL below description as plain text
-            if (advert.display_url) {
-                const displayUrl = document.createElement('p');
-                displayUrl.className = 'advert-display-url';
-                displayUrl.innerText = advert.display_url;
-                advertElement.appendChild(displayUrl);
-            }
 
             const button = document.createElement('a');
             button.href = advert.click_url;
@@ -115,15 +101,7 @@
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
                 background-color: #fff;
             }
-            #${containerId} .advert .advert-brand-name {
-                font-size: 0.85em;
-                color: #777;
-                margin-bottom: 8px;
-            }
             #${containerId} .advert .advert-image {
-                width: 100%;
-                max-width: 300px;
-                margin-bottom: 16px;
                 border-radius: 4px;
             }
             #${containerId} .advert h3 {
@@ -135,11 +113,6 @@
                 margin: 0 0 16px;
                 font-size: 1em;
                 color: #666;
-            }
-            #${containerId} .advert-display-url {
-                margin: 8px 0;
-                font-size: 0.9em;
-                color: #007bff;
             }
             #${containerId} .advert-button {
                 display: inline-block;
@@ -156,8 +129,23 @@
 
             /* Styles for template-simple */
             #${containerId}.template-simple .advert {
+                display: grid;
+                grid-template-columns: 20% 60% 20%;
+                align-items: center;
                 margin-bottom: 16px;
-                display: block;
+                gap: 16px;
+            }
+            #${containerId}.template-simple .advert .advert-image {
+                max-width: 100px;
+            }
+            #${containerId}.template-simple .advert .text-content {
+                flex: 1;
+            }
+            #${containerId}.template-simple .advert .text-content h3 {
+                margin-bottom: 8px;
+            }
+            #${containerId}.template-simple .advert .text-content p {
+                margin-bottom: 16px;
             }
 
             /* Styles for template-card */
@@ -168,6 +156,14 @@
             }
             #${containerId}.template-card .advert {
                 margin: 0;
+                text-align: center;
+            }
+            #${containerId}.template-card .advert h3 {
+                margin-bottom: 16px;
+            }
+            #${containerId}.template-card .advert .advert-image {
+                width: 100%;
+                margin-bottom: 16px;
             }
 
             /* Loading spinner styles */
@@ -193,6 +189,18 @@
             }
             @keyframes spin {
                 to { transform: rotate(360deg); }
+            }
+
+            /* Responsive styles */
+            @media (max-width: 768px) {
+                #${containerId}.template-simple .advert {
+                    grid-template-columns: 1fr;
+                    text-align: center;
+                }
+                #${containerId}.template-simple .advert .advert-image {
+                    margin: 0 auto;
+                    margin-bottom: 16px;
+                }
             }
         `;
         document.head.appendChild(style);
