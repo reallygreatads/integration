@@ -1,0 +1,111 @@
+/*
+  |--------------------------------------------------------------------------
+  | Simple Template CSS
+  |--------------------------------------------------------------------------
+  |
+  | This file contains the css for the simple template.
+  | All styles are prefixed with .rga_ to avoid conflicts with other project specific styles.
+  | Variables are used to provide flexbility for the user to customise the template.
+  |
+  */
+
+:root {
+  --rga-wrap-spacing: 1rem;
+  --rga-ad-spacing: 1rem;
+  --rga-ad-padding: 1.25rem;
+  --rga-ad-max-width: 900px;
+  --rga-ad-content-padding: 0 1rem;
+  --rga-ad-title-size: 1.5rem;
+  --rga-ad-title-margin: 0 0 0.5rem 0;
+  --rga-ad-border-radius: 8px;
+}
+
+.rga_simple-ad-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rga-wrap-spacing);
+  padding: var(--rga-wrap-spacing);
+
+  @media screen and (min-width: 1024px) {
+    padding: var(--rga-wrap-spacing) 0;
+  }
+}
+
+.rga_simple-ad-template {
+  background-color: #ffffff;
+  border-radius: var(--rga-ad-border-radius);
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: var(--rga-ad-spacing);
+  max-width: var(--rga-ad-max-width);
+  margin: 0 auto;
+  padding: var(--rga-ad-padding);
+  text-align: center;
+
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    text-align: left;
+  }
+}
+
+.rga_simple-ad-template .rga_simple-ad-template__content {
+  align-self: center;
+  grid-column: span 1 / span 1;
+
+  @media screen and (min-width: 768px) {
+    grid-column: span 4 / span 4;
+    padding: var(--rga-ad-content-padding);
+  }
+}
+
+.rga_simple-ad-template .rga_simple-ad-template__title {
+  font-size: var(--rga-ad-title-size);
+  line-height: 1;
+  margin: var(--rga-ad-title-margin);
+}
+
+.rga_simple-ad-template
+  .rga_simple-ad-template__title.rga_simple-ad-template__title--mobile {
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+}
+
+.rga_simple-ad-template
+  .rga_simple-ad-template__title.rga_simple-ad-template__title--desktop {
+  display: none;
+
+  @media screen and (min-width: 768px) {
+    display: block;
+  }
+}
+
+.rga_simple-ad-template .rga_simple-ad-template__image {
+  border-radius: var(--rga-ad-border-radius);
+  grid-column: span 1 / span 1;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+
+  @media screen and (min-width: 768px) {
+    grid-column: span 2 / span 2;
+  }
+}
+
+.rga_simple-ad-template .rga_simple-ad-template__cta {
+  align-items: center;
+  background-color: rgb(14 165 233);
+  border-radius: var(--rga-ad-border-radius);
+  color: white;
+  display: inline-flex;
+  flex: 1 1 0%;
+  grid-column: span 1 / span 1;
+  height: 40px;
+  justify-content: center;
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+
+  @media screen and (min-width: 768px) {
+    grid-column: span 2 / span 2;
+  }
+}

@@ -1,97 +1,97 @@
-(function() {
-    function fetchAdverts(uniqueId, currentUrl) {
-        const apiEndpoint = 'https://api.reallygreatads.com/v1/placement';
-        const payload = {
-            uniqueId: uniqueId,
-            url: currentUrl
-        };
+(function () {
+  function fetchAdverts(uniqueId, currentUrl) {
+    const apiEndpoint = "https://api.reallygreatads.com/v1/placement";
+    const payload = {
+      uniqueId: uniqueId,
+      url: currentUrl,
+    };
 
-        return fetch(apiEndpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        }).then(response => response.json());
-    }
+    return fetch(apiEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }).then((response) => response.json());
+  }
 
-    // Function to show loading spinner
-    function showLoadingSpinner(containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
+  // Function to show loading spinner
+  function showLoadingSpinner(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
 
-        container.innerHTML = ''; // Clear any existing content
-        const spinner = document.createElement('div');
-        spinner.className = 'loading-spinner';
-        spinner.innerHTML = `
+    container.innerHTML = ""; // Clear any existing content
+    const spinner = document.createElement("div");
+    spinner.className = "loading-spinner";
+    spinner.innerHTML = `
             <div class="spinner"></div>
             <p>Loading adverts...</p>
         `;
-        container.appendChild(spinner);
+    container.appendChild(spinner);
+  }
+
+  // Function to remove loading spinner
+  function removeLoadingSpinner(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const spinner = container.querySelector(".loading-spinner");
+    if (spinner) {
+      container.removeChild(spinner);
     }
+  }
 
-    // Function to remove loading spinner
-    function removeLoadingSpinner(containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-
-        const spinner = container.querySelector('.loading-spinner');
-        if (spinner) {
-            container.removeChild(spinner);
-        }
+  // Function to display adverts on the page
+  function displayAdverts(adverts, template, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      console.error("Adverts container not found");
+      return;
     }
+    container.className = ""; // Reset any previous template class
+    container.classList.add(template); // Apply the new template class
 
-    // Function to display adverts on the page
-    function displayAdverts(adverts, template, containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) {
-            console.error('Adverts container not found');
-            return;
-        }
-        container.className = ''; // Reset any previous template class
-        container.classList.add(template); // Apply the new template class
+    adverts.forEach((advert) => {
+      const advertElement = document.createElement("div");
+      advertElement.className = "advert";
 
-        adverts.forEach(advert => {
-            const advertElement = document.createElement('div');
-            advertElement.className = 'advert';
+      const title = document.createElement("h3");
+      title.innerText = advert.title;
+      advertElement.appendChild(title);
 
-            const title = document.createElement('h3');
-            title.innerText = advert.title;
-            advertElement.appendChild(title);
+      // Add image
+      if (advert.image_url) {
+        const image = document.createElement("img");
+        image.className = "advert-image";
+        image.src = advert.image_url;
+        image.alt = advert.title;
+        advertElement.appendChild(image);
+      }
 
-            // Add image
-            if (advert.image_url) {
-                const image = document.createElement('img');
-                image.className = 'advert-image';
-                image.src = advert.image_url;
-                image.alt = advert.title;
-                advertElement.appendChild(image);
-            }
+      const description = document.createElement("p");
+      // Check if the description is an array and join with new lines if it is
+      if (Array.isArray(advert.description)) {
+        description.innerText = advert.description.join("\n");
+      } else {
+        description.innerText = advert.description;
+      }
+      advertElement.appendChild(description);
 
-            const description = document.createElement('p');
-            // Check if the description is an array and join with new lines if it is
-            if (Array.isArray(advert.description)) {
-                description.innerText = advert.description.join('\n');
-            } else {
-                description.innerText = advert.description;
-            }
-            advertElement.appendChild(description);
+      const button = document.createElement("a");
+      button.href = advert.click_url;
+      button.innerText = advert.cta_text;
+      button.className = "advert-button";
+      advertElement.appendChild(button);
 
-            const button = document.createElement('a');
-            button.href = advert.click_url;
-            button.innerText = advert.cta_text;
-            button.className = 'advert-button';
-            advertElement.appendChild(button);
+      container.appendChild(advertElement);
+    });
+  }
 
-            container.appendChild(advertElement);
-        });
-    }
-
-    // Function to insert styles into the document head
-    function insertStyles(containerId) {
-        const style = document.createElement('style');
-        style.type = 'text/css';
-        style.innerHTML = `
+  // Function to insert styles into the document head
+  function insertStyles(containerId) {
+    const style = document.createElement("style");
+    style.type = "text/css";
+    style.innerHTML = `
             /* Common styles for all templates */
             #${containerId} .advert {
                 border: 1px solid #ccc;
@@ -203,31 +203,31 @@
                 }
             }
         `;
-        document.head.appendChild(style);
-    }
+    document.head.appendChild(style);
+  }
 
-    // Main function to initialize the adverts fetching and displaying
-    window.initAdverts = function(uniqueId, containerId) {
-        const currentUrl = window.location.href;
+  // Main function to initialize the adverts fetching and displaying
+  window.initAdverts = function (uniqueId, containerId) {
+    const currentUrl = window.location.href;
 
-        // Insert styles
-        insertStyles(containerId);
+    // Insert styles
+    insertStyles(containerId);
 
-        // Show loading spinner
-        showLoadingSpinner(containerId);
+    // Show loading spinner
+    showLoadingSpinner(containerId);
 
-        fetchAdverts(uniqueId, currentUrl)
-            .then(data => {
-                // Remove loading spinner
-                removeLoadingSpinner(containerId);
+    fetchAdverts(uniqueId, currentUrl)
+      .then((data) => {
+        // Remove loading spinner
+        removeLoadingSpinner(containerId);
 
-                // Display adverts
-                displayAdverts(data.adverts, data.template, containerId);
-            })
-            .catch(error => {
-                // Remove loading spinner and handle error
-                removeLoadingSpinner(containerId);
-                console.error('Error fetching adverts:', error);
-            });
-    };
+        // Display adverts
+        displayAdverts(data.adverts, data.template, containerId);
+      })
+      .catch((error) => {
+        // Remove loading spinner and handle error
+        removeLoadingSpinner(containerId);
+        console.error("Error fetching adverts:", error);
+      });
+  };
 })();
