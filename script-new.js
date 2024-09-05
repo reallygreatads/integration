@@ -1,3 +1,5 @@
+import { renderTemplateCard } from "./templates/template-card/template";
+
 function fetchAdverts(uniqueId, currentUrl) {
   const apiEndpoint = "http://localhost/placement";
   const payload = {
@@ -26,6 +28,7 @@ window.initAdverts = function (uniqueId, containerId, isDevMode = false) {
   fetchAdverts(uniqueId, currentUrl)
     .then((data) => {
       if (data.template) {
+        let adHtml;
         let src = `https://cdn.reallygreatads.com/${data.template}.min.css`;
 
         // If we're in development node, then we can use the local template
@@ -38,26 +41,30 @@ window.initAdverts = function (uniqueId, containerId, isDevMode = false) {
 
         document.head.appendChild(link);
 
-        // Now let's fetch the html from the dist/ folder
-        return fetch(`/templates/${data.template}/index.html`)
-          .then((response) => response.text())
-          .then((html) => {
-            const container = document.getElementById(containerId);
+        // Load the html now
+        const container = document.getElementById(containerId);
 
-            // Parse html so we can query the elements
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, "text/html");
+        console.log("data.template", data);
 
-            const adHtml = doc.querySelector("#rga_ad-wrapper").innerHTML;
+        switch (data.template) {
+          case "template-card":
+            adHtml = renderTemplateCard({
+              adverts: data.adverts,
+            });
+            break;
+        }
 
-            if (container) {
-              container.innerHTML = adHtml;
-            } else {
-              console.error("Container not found");
-            }
-          });
+        if (container) {
+          container.innerHTML = adHtml;
+        } else {
+          if (!adHtml) {
+            console.error("Unable to find layout for this advert");
+          } else {
+            console.error("Container not found");
+          }
+        }
       } else {
-        return console.log("No template was found");
+        console.log("No template was found");
       }
     })
     .catch((error) => {

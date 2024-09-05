@@ -7,13 +7,15 @@
     <title>Ad Templates</title>
     <link href="/style.css" rel="stylesheet" />
 
-    <script src="/script-new.js"></script>
+    <script src="/script-new.js" type="module"></script>
 
     <script>
       const uniqueId = "9cb7fd79-14ae-4779-bb28-60a8713626ba"; // Replace with your own placement ID
       const containerId = "adverts-container"; // Replace if you used a different ID in the HTML
 
-      window.initAdverts(uniqueId, containerId, true);
+      setTimeout(() => {
+        window.initAdverts(uniqueId, containerId, true);
+      }, 1000);
     </script>
   </head>
   <body>

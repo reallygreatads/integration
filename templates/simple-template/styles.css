@@ -1,9 +1,9 @@
 /*
   |--------------------------------------------------------------------------
-  | Simple Template CSS
+  | Card Template CSS
   |--------------------------------------------------------------------------
   |
-  | This file contains the css for the simple template.
+  | This file contains the css for the card template.
   | All styles are prefixed with .rga_ to avoid conflicts with other project specific styles.
   | Variables are used to provide flexbility for the user to customise the template.
   |
@@ -15,9 +15,13 @@
   --rga-ad-padding: 1.25rem;
   --rga-ad-max-width: 900px;
   --rga-ad-content-padding: 0 1rem;
-  --rga-ad-title-size: 1.5rem;
+  --rga-ad-title-size: 1.6rem;
   --rga-ad-title-margin: 0 0 0.5rem 0;
   --rga-ad-border-radius: 8px;
+  --rga-ad-body-font-size: 1.1rem;
+  --rga-ad-cta-bg: rgb(14, 165, 233);
+  --rga-ad-cta-hover-bg: rgb(70, 180, 229);
+  --rga-ad-cta-text-color: rgb(255, 255, 255);
 }
 
 .rga_simple-ad-wrap {
@@ -38,6 +42,7 @@
   grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: var(--rga-ad-spacing);
   max-width: var(--rga-ad-max-width);
+  width: 100%;
   margin: 0 auto;
   padding: var(--rga-ad-padding);
   text-align: center;
@@ -53,6 +58,7 @@
   grid-column: span 1 / span 1;
 
   @media screen and (min-width: 768px) {
+    font-size: var(--rga-ad-body-font-size);
     grid-column: span 4 / span 4;
     padding: var(--rga-ad-content-padding);
   }
@@ -80,11 +86,11 @@
   }
 }
 
-.rga_simple-ad-template .rga_simple-ad-template__image {
+.rga_simple-ad-template .rga_simple-ad-template__image-wrap {
+  background-color: #ececec;
   border-radius: var(--rga-ad-border-radius);
   grid-column: span 1 / span 1;
   height: 100%;
-  object-fit: cover;
   width: 100%;
 
   @media screen and (min-width: 768px) {
@@ -92,11 +98,22 @@
   }
 }
 
+.rga_simple-ad-template .rga_simple-ad-template__image {
+  border-radius: var(--rga-ad-border-radius);
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.rga_simple-ad-template .rga_simple-ad-template__list {
+  padding-left: 1rem;
+}
+
 .rga_simple-ad-template .rga_simple-ad-template__cta {
   align-items: center;
-  background-color: rgb(14 165 233);
+  background-color: var(--rga-ad-cta-bg);
   border-radius: var(--rga-ad-border-radius);
-  color: white;
+  color: var(--rga-ad-cta-text-color);
   display: inline-flex;
   flex: 1 1 0%;
   grid-column: span 1 / span 1;
@@ -108,4 +125,8 @@
   @media screen and (min-width: 768px) {
     grid-column: span 2 / span 2;
   }
+}
+
+.rga_simple-ad-template .rga_simple-ad-template__cta:hover {
+  background-color: var(--rga-ad-cta-hover-bg);
 }
