@@ -15,7 +15,7 @@
   --rga-ad-padding: 1.25rem;
   --rga-ad-max-width: 900px;
   --rga-ad-content-padding: 0 1rem;
-  --rga-ad-title-size: 1.6rem;
+  --rga-ad-title-size: 1.5rem;
   --rga-ad-title-margin: 0 0 0.5rem 0;
   --rga-ad-border-radius: 8px;
   --rga-ad-body-font-size: 1.1rem;
@@ -25,9 +25,6 @@
 }
 
 .rga_card-ad-wrap {
-  /* display: flex;
-  flex-direction: column; */
-
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
 
@@ -35,7 +32,7 @@
   padding: var(--rga-wrap-spacing);
 
   @media screen and (min-width: 1024px) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     padding: var(--rga-wrap-spacing) 0;
   }
 }
@@ -43,26 +40,29 @@
 .rga_card-ad-template {
   background-color: #ffffff;
   border-radius: var(--rga-ad-border-radius);
-  /* display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr)); */
   display: flex;
   flex-direction: column;
   gap: var(--rga-ad-spacing);
-  /* max-width: var(--rga-ad-max-width); */
-  /* width: 100%; */
-  /* margin: 0 auto; */
   padding: var(--rga-ad-padding);
   text-align: center;
+  grid-column: span 2 / span 2;
+}
 
-  @media screen and (min-width: 768px) {
-    /* grid-template-columns: repeat(8, minmax(0, 1fr)); */
-    /* text-align: left; */
-  }
+/**
+ * Offset Styles
+ */
+.rga_card-ad-template.rga_card-ad-template--offset-2 {
+  grid-column-start: 2;
+}
+
+.rga_card-ad-template.rga_card-ad-template--offset-3 {
+  grid-column-start: 3;
 }
 
 .rga_card-ad-template .rga_card-ad-template__content {
   align-self: center;
   grid-column: span 1 / span 1;
+  text-align: left;
 
   @media screen and (min-width: 768px) {
     font-size: var(--rga-ad-body-font-size);
@@ -83,9 +83,13 @@
   grid-column: span 1 / span 1;
   height: 100%;
   width: 100%;
+  min-height: 220px;
 
   @media screen and (min-width: 768px) {
     grid-column: span 2 / span 2;
+  }
+
+  @media screen and (min-width: 1024px) {
     max-height: 220px;
   }
 }
@@ -108,7 +112,7 @@
   color: var(--rga-ad-cta-text-color);
   display: inline-flex;
   margin: 0 auto;
-  height: 40px;
+  height: 35px;
   width: 100%;
   justify-content: center;
   max-width: 150px;
@@ -118,4 +122,36 @@
 
 .rga_card-ad-template .rga_card-ad-template__cta:hover {
   background-color: var(--rga-ad-cta-hover-bg);
+}
+
+/**
+ * Spinner
+ */
+.rga_loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.rga_loading-spinner .rga_spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 123, 255, 0.3);
+  border-top-color: #007bff;
+  border-radius: 50%;
+  animation: rga_spin 1s linear infinite;
+}
+
+.rga_loading-spinner p {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+@keyframes rga_spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
