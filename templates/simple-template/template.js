@@ -1,4 +1,4 @@
-export const renderTemplateCard = ({ adverts }) => {
+export const renderSimpleTemplate = ({ adverts }) => {
   if (adverts.length === 0) {
     return `
       <div id="rga_ad-wrapper">

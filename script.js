@@ -1,3 +1,4 @@
+import { renderSimpleTemplate } from "./templates/simple-template/template";
 import { renderTemplateCard } from "./templates/template-card/template";
 
 function fetchAdverts(uniqueId, currentUrl) {
@@ -108,6 +109,12 @@ window.initAdverts = function (uniqueId, containerId, isDevMode = false) {
         switch (data.template) {
           case "template-card":
             adHtml = renderTemplateCard({
+              adverts: data.adverts,
+            });
+            break;
+
+          case "simple-template":
+            adHtml = renderSimpleTemplate({
               adverts: data.adverts,
             });
             break;
