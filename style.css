@@ -12,3 +12,11 @@ body {
   margin: 0;
   background: #ececec;
 }
+
+.preview-wrap {
+  padding: 2rem 2rem 4rem 2rem;
+  background: #cccccc;
+  max-width: 1080px;
+  margin: 5rem auto;
+  border-radius: 1rem;
+}
