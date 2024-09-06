@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ad Templates</title>
+    <link href="/style.css" rel="stylesheet" />
+
+    <script src="/script.js" type="module"></script>
+
+    <script>
+      const uniqueId = "9cb7fd79-14ae-4779-bb28-60a8713626ba"; // Replace with your own placement ID
+      const containerId = "adverts-container"; // Replace if you used a different ID in the HTML
+
+      window.onload = function () {
+        window.initAdverts(uniqueId, containerId, true);
+      };
+    </script>
+  </head>
+  <body>
+    <h1>Ad Templates</h1>
+
+    <ul>
+      <li>
+        <a href="/templates/weary-wolverine/index.html">Weary Wolverine</a>
+      </li>
+      <li>
+        <a href="/templates/lazy-ladybird/index.html">Lazy Ladybird</a>
+      </li>
+    </ul>
+
+    <hr />
+
+    <div class="preview-wrap">
+      <h2>Live Preview</h2>
+      <p>
+        The adverts below are live and are retrieved from the API call you have
+        made in your inline script.
+      </p>
+
+      <div id="adverts-container"></div>
+    </div>
+  </body>
+</html>

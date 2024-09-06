@@ -1,0 +1,157 @@
+/*
+  |--------------------------------------------------------------------------
+  | Card Template CSS
+  |--------------------------------------------------------------------------
+  |
+  | This file contains the css for the card template.
+  | All styles are prefixed with .rga_ to avoid conflicts with other project specific styles.
+  | Variables are used to provide flexbility for the user to customise the template.
+  |
+  */
+
+:root {
+  --rga-wrap-spacing: 1rem;
+  --rga-ad-spacing: 1rem;
+  --rga-ad-padding: 1.25rem;
+  --rga-ad-max-width: 900px;
+  --rga-ad-content-padding: 0 1rem;
+  --rga-ad-title-size: 1.5rem;
+  --rga-ad-title-margin: 0 0 0.5rem 0;
+  --rga-ad-border-radius: 8px;
+  --rga-ad-body-font-size: 1.1rem;
+  --rga-ad-cta-bg: rgb(14, 165, 233);
+  --rga-ad-cta-hover-bg: rgb(70, 180, 229);
+  --rga-ad-cta-text-color: rgb(255, 255, 255);
+}
+
+.rga_card-ad-wrap {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+
+  gap: var(--rga-wrap-spacing);
+  padding: var(--rga-wrap-spacing);
+
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    padding: var(--rga-wrap-spacing) 0;
+  }
+}
+
+.rga_card-ad-template {
+  background-color: #ffffff;
+  border-radius: var(--rga-ad-border-radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--rga-ad-spacing);
+  padding: var(--rga-ad-padding);
+  text-align: center;
+  grid-column: span 2 / span 2;
+}
+
+/**
+ * Offset Styles
+ */
+.rga_card-ad-template.rga_card-ad-template--offset-2 {
+  grid-column-start: 2;
+}
+
+.rga_card-ad-template.rga_card-ad-template--offset-3 {
+  grid-column-start: 3;
+}
+
+.rga_card-ad-template .rga_card-ad-template__content {
+  align-self: center;
+  grid-column: span 1 / span 1;
+  text-align: left;
+
+  @media screen and (min-width: 768px) {
+    font-size: var(--rga-ad-body-font-size);
+    grid-column: span 4 / span 4;
+    padding: var(--rga-ad-content-padding);
+  }
+}
+
+.rga_card-ad-template .rga_card-ad-template__title {
+  font-size: var(--rga-ad-title-size);
+  line-height: 1;
+  margin: var(--rga-ad-title-margin);
+}
+
+.rga_card-ad-template .rga_card-ad-template__image-wrap {
+  background-color: #ececec;
+  border-radius: var(--rga-ad-border-radius);
+  grid-column: span 1 / span 1;
+  height: 100%;
+  width: 100%;
+  min-height: 220px;
+
+  @media screen and (min-width: 768px) {
+    grid-column: span 2 / span 2;
+  }
+
+  @media screen and (min-width: 1024px) {
+    max-height: 220px;
+  }
+}
+
+.rga_card-ad-template .rga_card-ad-template__image {
+  border-radius: var(--rga-ad-border-radius);
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.rga_card-ad-template .rga_card-ad-template__list {
+  padding-left: 1rem;
+}
+
+.rga_card-ad-template .rga_card-ad-template__cta {
+  align-items: center;
+  background-color: var(--rga-ad-cta-bg);
+  border-radius: var(--rga-ad-border-radius);
+  color: var(--rga-ad-cta-text-color);
+  display: inline-flex;
+  margin: 0 auto;
+  height: 35px;
+  width: 100%;
+  justify-content: center;
+  max-width: 150px;
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+}
+
+.rga_card-ad-template .rga_card-ad-template__cta:hover {
+  background-color: var(--rga-ad-cta-hover-bg);
+}
+
+/**
+ * Spinner
+ */
+.rga_loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.rga_loading-spinner .rga_spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 123, 255, 0.3);
+  border-top-color: #007bff;
+  border-radius: 50%;
+  animation: rga_spin 1s linear infinite;
+}
+
+.rga_loading-spinner p {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+@keyframes rga_spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

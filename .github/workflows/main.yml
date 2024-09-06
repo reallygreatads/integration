@@ -17,15 +17,15 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: Install dependencies
-        run: npm install uglify-js -g
+        run: npm install
 
-      - name: Minimize JavaScript
-        run: uglifyjs script.js -o script.min.js
+      - name: Build project
+        run: npm run build
 
       - name: Install AWS CLI
         run: sudo apt-get install awscli -y
 
-      - name: Upload to DigitalOcean Spaces
+      - name: Upload /assets/ files to DigitalOcean Space root
         env:
           DO_SPACES_KEY: ${{ secrets.DO_SPACES_KEY }}
           DO_SPACES_SECRET: ${{ secrets.DO_SPACES_SECRET }}
@@ -34,16 +34,19 @@ jobs:
         run: |
           aws configure set aws_access_key_id $DO_SPACES_KEY
           aws configure set aws_secret_access_key $DO_SPACES_SECRET
-          aws s3 cp script.min.js s3://${SPACE_NAME}/ --region ${SPACE_REGION} --endpoint https://${SPACE_REGION}.digitaloceanspaces.com --acl public-read
+          aws s3 cp dist/assets/ s3://${SPACE_NAME}/ --recursive --region ${SPACE_REGION} --endpoint https://${SPACE_REGION}.digitaloceanspaces.com --acl public-read
 
       - name: Install DigitalOcean CLI
         run: |
           curl -sL https://github.com/digitalocean/doctl/releases/download/v1.91.0/doctl-1.91.0-linux-amd64.tar.gz | tar -xzv
           sudo mv doctl /usr/local/bin
 
-      - name: Purge Cache
+      - name: Purge Cache for files in root
         env:
           DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DO_ACCESS_TOKEN }}
         run: |
           CDN_ID=$(doctl compute cdn list --no-header --format ID)
-          doctl compute cdn flush $CDN_ID --files /script.min.js
+          FILES_TO_PURGE=$(aws s3 ls s3://${SPACE_NAME}/ --recursive | awk '{print $4}')
+          for file in $FILES_TO_PURGE; do
+            doctl compute cdn flush $CDN_ID --files /$file
+          done
