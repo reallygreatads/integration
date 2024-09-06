@@ -16,7 +16,7 @@ export default defineConfig({
         ),
       },
       output: {
-        entryFileNames: "assets/script.js",
+        entryFileNames: "assets/script.min.js",
         assetFileNames: "assets/[name].min[extname]",
       },
     },

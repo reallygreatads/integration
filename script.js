@@ -1,5 +1,5 @@
-import { renderSimpleTemplate } from "./templates/simple-template/template";
-import { renderTemplateCard } from "./templates/template-card/template";
+import { renderSimpleTemplate } from "./templates/weary-wolverine/template";
+import { renderTemplateCard } from "./templates/lazy-ladybird/template";
 
 function fetchAdverts(uniqueId, currentUrl) {
   const apiEndpoint = "https://api.reallygreatads.com/v1/placement";
