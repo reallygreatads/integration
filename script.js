@@ -2,8 +2,7 @@ import { renderSimpleTemplate } from "./templates/simple-template/template";
 import { renderTemplateCard } from "./templates/template-card/template";
 
 function fetchAdverts(uniqueId, currentUrl) {
-  // @TODO: Replace with the real api endpoint
-  const apiEndpoint = "http://localhost/placement";
+  const apiEndpoint = "https://api.reallygreatads.com/v1/placement";
   const payload = {
     uniqueId: uniqueId,
     url: currentUrl,
@@ -107,13 +106,13 @@ window.initAdverts = function (uniqueId, containerId, isDevMode = false) {
         const container = document.getElementById(containerId);
 
         switch (data.template) {
-          case "template-card":
+          case "lazy-ladybird":
             adHtml = renderTemplateCard({
               adverts: data.adverts,
             });
             break;
 
-          case "simple-template":
+          case "weary-wolverine":
             adHtml = renderSimpleTemplate({
               adverts: data.adverts,
             });
