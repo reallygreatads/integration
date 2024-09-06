@@ -6,13 +6,13 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),
-        "simple-template": resolve(
+        "weary-wolverine": resolve(
           __dirname,
-          "templates/simple-template/index.html"
+          "templates/weary-wolverine/index.html"
         ),
-        "template-card": resolve(
+        "lazy-ladybird": resolve(
           __dirname,
-          "templates/template-card/index.html"
+          "templates/lazy-ladybird/index.html"
         ),
       },
       output: {
