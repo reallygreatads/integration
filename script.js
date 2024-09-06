@@ -65,7 +65,7 @@ function renderLoadingSpinner(containerId) {
   container.innerHTML = `
     <div class="rga_loading-spinner">
       <div class="rga_spinner"></div>
-      <p>Loading adverts...</p>
+      <p>Loading...</p>
     </div>
   `;
 }
