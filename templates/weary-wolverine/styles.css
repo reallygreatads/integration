@@ -38,6 +38,8 @@
 .rga_simple-ad-template {
   background-color: #ffffff;
   border-radius: var(--rga-ad-border-radius);
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: var(--rga-ad-spacing);
