@@ -40,14 +40,16 @@
   border-radius: var(--rga-ad-border-radius);
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: var(--rga-ad-spacing);
   max-width: var(--rga-ad-max-width);
-  width: 100%;
   margin: 0 auto;
   padding: var(--rga-ad-padding);
   text-align: center;
+}
+
+.rga_simple-ad-template .rga_simple-ad-template__grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: var(--rga-ad-spacing);
 
   @media screen and (min-width: 768px) {
     grid-template-columns: repeat(8, minmax(0, 1fr));
@@ -56,7 +58,6 @@
 }
 
 .rga_simple-ad-template .rga_simple-ad-template__content {
-  align-self: center;
   grid-column: span 1 / span 1;
 
   @media screen and (min-width: 768px) {
@@ -92,10 +93,11 @@
   background-color: #ececec;
   border-radius: var(--rga-ad-border-radius);
   grid-column: span 1 / span 1;
-  height: 100%;
   width: 100%;
+}
 
-  @media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) {
+  .rga_simple-ad-template .rga_simple-ad-template__image-wrap {
     grid-column: span 2 / span 2;
   }
 }
