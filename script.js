@@ -90,7 +90,7 @@ window.initAdverts = function (uniqueId, containerId, isDevMode = false) {
     .then((data) => {
       if (data.template) {
         let adHtml;
-        let src = `https://cdn.reallygreatads.com/${data.template}.min.css`;
+        let src = `https://cdn-reallygreatads.sfo3.cdn.digitaloceanspaces.com/${data.template}.min.css`;
 
         // If we're in development node, then we can use the local template
         if (isDevMode) src = `/templates/${data.template}/styles.css`;
