@@ -22,18 +22,15 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Configure AWS CLI
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.DO_SPACES_KEY }}
-          aws-secret-access-key: ${{ secrets.DO_SPACES_SECRET }}
-          aws-region: us-west-1
-
       - name: Upload /assets/ files to DigitalOcean Space root
         env:
+          DO_SPACES_KEY: ${{ secrets.DO_SPACES_KEY }}
+          DO_SPACES_SECRET: ${{ secrets.DO_SPACES_SECRET }}
           SPACE_NAME: cdn-reallygreatads
           SPACE_REGION: sfo3
         run: |
+          aws configure set aws_access_key_id $DO_SPACES_KEY
+          aws configure set aws_secret_access_key $DO_SPACES_SECRET
           aws s3 cp dist/assets/ s3://${SPACE_NAME}/ --recursive --region ${SPACE_REGION} --endpoint https://${SPACE_REGION}.digitaloceanspaces.com --acl public-read
 
       - name: Install DigitalOcean CLI
